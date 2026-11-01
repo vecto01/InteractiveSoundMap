@@ -7,76 +7,56 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="loading-container">
-        <div class="loading-spinner"></div>
-        <div class="loading-progress-container">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-        <div class="loading-message"></div>
+    <div class="map-container">
+        <!-- Контент будет добавлен динамически -->
     </div>
-    
-    <div class="controls-container">
-        <div class="controls">
-            <button class="btn disabled" aria-disabled="true">Sound Type</button>
-            <div class="play-example-container">
-                <button class="btn disabled" aria-disabled="true" aria-label="Play sound example">
-                    <span class="play-icon">●</span>
-                    Play
-                </button>
-            </div>
-            <input type="range" class="slider" min="0" max="100" value="50">
-        </div>
-    </div>
-    
-    <div class="map-container" id="mapContainer">
-        <p class="map-text">Drag to explore the sound map</p>
-    </div>
-    
-    <div class="footer">
-        <span>© 2023 Interactive Sound Map</span>
-    </div>
-
+    <footer>
+        <p>Interactive Sound Map</p>
+    </footer>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const loadingSpinner = document.querySelector('.loading-spinner');
-            const loadingMessage = document.querySelector('.loading-message');
-            const mapContainer = document.querySelector('.map-container');
-            const progressBar = document.querySelector('.progress-bar');
-
-            // Имитация загрузки с плавными анимациями
-            setTimeout(() => {
-                loadingSpinner.classList.add('active');
-                loadingMessage.textContent = 'Loading...';
-                progressBar.style.width = '25%';
-                progressBar.setAttribute('aria-valuenow', '25');
-            }, 500);
-
-            setTimeout(() => {
-                loadingSpinner.classList.add('pulse');
-                setTimeout(() => {
-                    loadingSpinner.classList.remove('pulse');
-                    loadingMessage.textContent = 'Ready!';
-
-                    // Плавное появление контейнера
-                    mapContainer.style.opacity = '0';
-                    mapContainer.style.transform = 'scale(0.95) translateY(10px)';
-
-                    mapContainer.style.transition = 'opacity 0.5s ease, transform 0.5s ease, height 0.5s ease';
-
-                    setTimeout(() => {
-                        mapContainer.style.opacity = '1';
-                        mapContainer.style.transform = 'scale(1) translateY(0)';
-                        mapContainer.style.height = 'auto';
-                    }, 500);
-                }, 500);
-            }, 1200);
-
-            // Деактивация кнопок до завершения загрузки
-            document.querySelectorAll('.btn').forEach(button => {
-                button.classList.add('disabled');
-                button.setAttribute('aria-disabled', 'true');
+        // Placeholder for JavaScript logic
+        window.addEventListener('DOMContentLoaded', function() {
+            const body = document.body;
+            const themeToggle = document.createElement('button');
+            themeToggle.textContent = 'Dark Mode';
+            themeToggle.className = 'btn';
+            body.appendChild(themeToggle);
+            
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('dark-theme');
+                body.classList.remove('light-theme');
             });
         });
+    </script>
+    <script>
+        // Placeholder for sound data
+        const soundData = [
+            {
+                name: 'Ambient Noise',
+                description: 'Soft sounds from the environment',
+                frequency: 50
+            },
+            {
+                name: 'City Traffic',
+                description: 'Sounds of city life',
+                frequency: 75
+            }
+        ];
+        
+        // Render cards dynamically
+        function renderCards() {
+            const container = document.querySelector('.map-container');
+            container.innerHTML = ''; // Clear existing content
+            
+            soundData.forEach(sound => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `<h3>${sound.name}</h3><p>${sound.description}</p><p>Frequency: ${sound.frequency} Hz</p>`;
+                container.appendChild(card);
+            });
+        }
+        
+        window.addEventListener('DOMContentLoaded', renderCards);
     </script>
 </body>
 </html>
