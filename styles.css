@@ -24,7 +24,7 @@
     display: flex;
     animation: spin 1s linear infinite;
     justify-content: center;
-    background: linear-gradient(135deg, #4CAF50, #45a049); /* Зеленый градиент */
+    background: linear-gradient(135deg, #4CAF50, #45a049);
 }
 
 @keyframes spin {
@@ -75,12 +75,12 @@
     transition: transform 0.3s ease;
     will-change: transform;
     margin-bottom: 20px;
-    border-radius: 12px;
     background: linear-gradient(to bottom, #1a1a1a, #2d2d2d);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .controls .btn {
-    background-color: #2E7D32;
+    background-color: #1B5E20;
     color: #FFFFFF;
     border: none;
     border-radius: 6px;
@@ -91,76 +91,54 @@
     will-change: transform, box-shadow;
     width: 100%;
     font-weight: 500;
-    margin: 0.5rem 0;
-    color: #FFFFFF;
     text-align: center;
     border-radius: 6px;
+    outline: 2px solid rgba(76, 175, 80, 0.5);
+    outline-offset: 2px;
+    background: linear-gradient(to bottom, #1B5E20, #1A4A20);
 }
 
 .controls .btn:hover, .controls .btn:focus-visible {
-    background-color: #1B5E20;
+    background-color: #0D471A;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: #4CAF50;
+    outline: 2px solid rgba(76, 175, 80, 0.5);
+    outline-offset: 2px;
 }
 
 .controls .btn:active {
     transform: translateY(0);
-    background-color: #1A4A20;
-}
-
-.slider {
-    width: 100%;
-    -webkit-appearance: none;
-    height: 8px;
-    background: #444444;
-    border-radius: 4px;
-    outline: none;
-    transition: background 0.2s ease, width 0.2s ease;
-    will-change: background;
-}
-
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
-    background: #FFFFFF;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
-    transition: transform 0.2s ease;
-    will-change: transform;
-}
-
-.slider:hover {
-    background: #4CAF50;
+    background-color: #0B360F;
 }
 
 .map-container {
-    position: relative;
-    margin-top: 2rem;
-    width: 100%;
+    position: sticky;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
     max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: rgba(50, 50, 60, 0.2);
+    margin: 0 auto;
+    background-color: rgba(20, 20, 30, 0.5);
     border-radius: 8px;
     padding: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: linear-gradient(to bottom, #121212, #0a0a1a);
+    border: none;
     overflow: hidden;
     border-radius: 12px;
     animation: fadeInContainer 0.5s ease-in forwards;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease, transform 0.5s ease;
     will-change: opacity, transform;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     padding-bottom: 20px;
-    border-radius: 12px;
-    background: rgba(20, 20, 30, 0.5);
+    background: linear-gradient(to bottom, #121212, #0a0a1a);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    margin-top: 1rem;
 }
 
 @keyframes fadeInContainer {
@@ -174,7 +152,7 @@
     left: 0;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.8);
-    color: #F5F5F5;
+    color: #FFFFFF;
     padding: 1rem;
     text-align: center;
     font-size: 0.7rem;
@@ -182,9 +160,30 @@
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 0 0 8px 8px;
     animation: scrollFadeIn 0.3s ease-out;
+    margin-top: 2rem;
 }
 
 @keyframes scrollFadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+    .controls {
+        width: 95%;
+        max-width: 100%;
+        padding: 1.2rem;
+        margin-bottom: 15px;
+        top: 1rem;
+    }
+    .controls .btn {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+    .map-container {
+        position: relative;
+        top: auto;
+        margin-bottom: 1rem;
+    }
 }
