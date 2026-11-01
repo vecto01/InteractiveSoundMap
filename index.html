@@ -7,32 +7,59 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="loading-screen" class="loading-spinner">
-        <div class="loading-message">Loading sound map...</div>
-    </div>
+    <div class="loading-spinner"></div>
+    <div class="loading-message"></div>
     
     <div class="controls">
-        <p style="color: #FFFFFF; text-decoration: underline; text-decoration-color: #4CAF50; text-decoration-thickness: 1px; font-weight: 500;">Drag to explore →</p>
-        <div class="control-group">
-            <button class="btn">Sound Type</button>
-        </div>
+        <button class="btn">Sound Type</button>
+        <button class="btn">Play Example</button>
         <input type="range" class="slider" min="0" max="100" value="50">
-        <div class="control-group">
-            <button class="btn">Play Example</button>
-        </div>
     </div>
     
     <div class="map-container">
-        <div id="map-content">
-            <div class="no-sources" style="display: none;">No sound sources available yet</div>
-        </div>
-        <div id="ready-screen" class="ready-message" style="display: none;">Ready! Tap or drag to explore sounds.</div>
+        <p>Drag to explore the sound map</p>
     </div>
     
-    <div class="footer">
-        <p style="color: #666; font-size: 0.8rem; margin-top: 1rem;">© 2023 Interactive Sound Map. All rights reserved.</p>
+    <div class="fixed-footer">
+        © 2023 Interactive Sound Map
     </div>
     
-    <script src="scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingSpinner = document.querySelector('.loading-spinner');
+            const loadingMessage = document.querySelector('.loading-message');
+            const mapContainer = document.querySelector('.map-container');
+            
+            // Имитация загрузки с плавными анимациями
+            setTimeout(() => {
+                loadingSpinner.classList.add('active');
+                loadingMessage.textContent = 'Loading sound map...';
+            }, 1000);
+            
+            setTimeout(() => {
+                loadingSpinner.classList.remove('active');
+                loadingMessage.classList.add('loading');
+                
+                // Плавное появление контейнера
+                mapContainer.style.opacity = '0';
+                mapContainer.style.transform = 'scale(0.98)';
+                
+                setTimeout(() => {
+                    mapContainer.style.opacity = '1';
+                    mapContainer.style.transform = 'scale(1)';
+                }, 500);
+            }, 2000);
+            
+            // Анимация footer при скролле
+            window.addEventListener('scroll', function() {
+                const footer = document.querySelector('.fixed-footer');
+                if (window.scrollY > 100) {
+                    footer.style.animation = 'scrollFadeIn 0.3s ease-out';
+                } else {
+                    footer.style.animation = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

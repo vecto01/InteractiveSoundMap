@@ -9,19 +9,22 @@
     width: 100%;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.8);
-    color: var(--theme-text);
+    color: #FFFFFF;
     text-align: center;
     z-index: 1000;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
     padding: 2rem;
+    will-change: transform, opacity;
+    display: flex;
+    align-items: center;
     justify-content: center;
 }
 
 .loading-spinner.active {
     display: flex;
     animation: spin 1s linear infinite;
+    justify-content: center;
+    background: linear-gradient(135deg, #4CAF50, #45a049); /* Зеленый градиент */
 }
 
 @keyframes spin {
@@ -30,21 +33,23 @@
 }
 
 .loading-message {
-    color: #E0E0E0;
+    color: #F5F5F5;
     font-size: 1.2rem;
     margin-top: 1rem;
     text-align: center;
-    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+    animation: fadeIn 0.3s ease-in forwards;
+    will-change: opacity;
+}
+
+.loading-message.loading {
+    opacity: 0;
+    animation: fadeOut 0.3s ease-out forwards;
 }
 
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
-}
-
-.loading-message.loading {
-    opacity: 0;
-    animation: fadeOut 0.5s ease forwards;
 }
 
 @keyframes fadeOut {
@@ -64,63 +69,71 @@
     padding: 1.5rem;
     z-index: 5;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease;
+    will-change: transform;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    background: linear-gradient(to bottom, #1a1a1a, #2d2d2d);
 }
 
 .controls .btn {
-    background-color: #4CAF50;
+    background-color: #2E7D32;
     color: #FFFFFF;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 0.8rem;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.2s ease;
+    will-change: transform, box-shadow;
     width: 100%;
     font-weight: 500;
+    margin: 0.5rem 0;
+    color: #FFFFFF;
+    text-align: center;
+    border-radius: 6px;
 }
 
 .controls .btn:hover, .controls .btn:focus-visible {
-    background-color: #388E3C;
+    background-color: #1B5E20;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #4CAF50;
 }
 
 .controls .btn:active {
     transform: translateY(0);
-    background-color: #3A7D3A;
+    background-color: #1A4A20;
 }
 
 .slider {
     width: 100%;
     -webkit-appearance: none;
     height: 8px;
-    background: #424242;
+    background: #444444;
     border-radius: 4px;
     outline: none;
-    transition: background 0.3s ease;
-}
-
-.slider:hover {
-    background: #333;
+    transition: background 0.2s ease, width 0.2s ease;
+    will-change: background;
 }
 
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 16px;
     height: 16px;
-    background: #4CAF50;
+    background: #FFFFFF;
     border-radius: 50%;
     cursor: pointer;
     box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
     transition: transform 0.2s ease;
+    will-change: transform;
 }
 
-.slider:hover::-webkit-slider-thumb {
-    transform: scale(1.2);
+.slider:hover {
+    background: #4CAF50;
 }
 
 .map-container {
@@ -131,68 +144,47 @@
     margin-left: auto;
     margin-right: auto;
     background-color: rgba(50, 50, 60, 0.2);
-    border-radius: 4px;
-    padding: 1rem;
+    border-radius: 8px;
+    padding: 1.5rem;
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: linear-gradient(to bottom, #121212, #0a0a1a);
     overflow: hidden;
-    border-radius: 8px;
-    animation: fadeInContainer 0.5s ease forwards;
+    border-radius: 12px;
+    animation: fadeInContainer 0.5s ease-in forwards;
     opacity: 0;
     transition: opacity 0.5s ease;
+    will-change: opacity, transform;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 20px;
+    border-radius: 12px;
+    background: rgba(20, 20, 30, 0.5);
 }
 
 @keyframes fadeInContainer {
-    from { opacity: 0; transform: scale(0.9); }
+    from { opacity: 0; transform: scale(0.98); }
     to { opacity: 1; transform: scale(1); }
 }
 
-.ready-message {
-    color: #4CAF50;
-    font-size: 1.5rem;
-    margin-top: 2rem;
-    text-align: center;
-    font-weight: bold;
-    display: none;
-}
-
-.no-sources {
-    color: #FFFFFF;
-    background-color: rgba(255, 255, 255, 0.1);
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #F5F5F5;
     padding: 1rem;
-    border-radius: 4px;
     text-align: center;
-    display: none;
-    transition: opacity 0.3s ease;
+    font-size: 0.7rem;
+    z-index: 1;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 8px 8px;
+    animation: scrollFadeIn 0.3s ease-out;
 }
 
-/* Адаптивность для мобильных устройств */
-@media (max-width: 768px) {
-    .controls {
-        width: 100%;
-        margin: 0.5rem auto;
-        padding: 1rem;
-    }
-    .btn {
-        width: 100%;
-        padding: 0.6rem;
-        font-size: 0.85rem;
-    }
-    .slider {
-        height: 6px;
-    }
-    .map-container {
-        margin-top: 1rem;
-    }
-}
-
-/* Адаптивность для планшетов */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .controls {
-        width: 85%;
-        margin-left: 5%;
-    }
-    .map-container {
-        max-width: 600px;
-    }
+@keyframes scrollFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
