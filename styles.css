@@ -1,189 +1,323 @@
-#!/usr/bin/env node
+@charset "UTF-8";
 
-/* Loading animation with improved visual feedback */
-.loading-spinner {
-    display: none;
+/* Основной стиль */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    overflow-x: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    
+    [data-theme="dark"] body {
+        background-color: #121212;
+    }
+}
+
+/* Темная тема */
+[data-theme="dark"] body {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* Контейнер загрузки */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: #FFFFFF;
-    text-align: center;
     z-index: 1000;
-    justify-content: center;
-    padding: 2rem;
-    will-change: transform, opacity;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    
+    animation: fadeIn 0.5s ease-out;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #4CAF50;
+    animation: spin 1.5s ease-in-out infinite;
+    margin-bottom: 15px;
+    
+    [data-theme="dark"] .loading-spinner {
+        border-top-color: #4CAF50;
+    }
 }
 
 .loading-spinner.active {
-    display: flex;
-    animation: spin 1s linear infinite;
-    justify-content: center;
-    background: linear-gradient(135deg, #4CAF50, #45a049);
+    border-top-color: #4CAF50;
+    animation: pulse 1.5s ease-in-out infinite;
 }
 
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+.loading-progress {
+    width: 80px;
+    height: 4px;
+    background-color: #333;
+    margin: 10px 0;
+    border-radius: 2px;
+    overflow: hidden;
+    
+    [data-theme="dark"] .loading-progress {
+        background-color: #222;
+    }
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #4CAF50;
+    transition: width 0.5s ease;
+    
+    [data-theme="dark"] .progress-bar {
+        background-color: #4DD0E1;
+    }
 }
 
 .loading-message {
-    color: #F5F5F5;
     font-size: 1.2rem;
-    margin-top: 1rem;
-    text-align: center;
-    opacity: 0;
-    animation: fadeIn 0.3s ease-in forwards;
-    will-change: opacity;
+    color: #cccccc;
+    margin-top: 10px;
+    
+    [data-theme="dark"] .loading-message {
+        color: #e0e0e0;
+    }
+    
+    [data-theme="dark"] .loading-message[aria-live="assertive"] {
+        color: #4CAF50;
+        font-weight: bold;
+    }
 }
 
-.loading-message.loading {
-    opacity: 0;
-    animation: fadeOut 0.3s ease-out forwards;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
-}
-
-.controls {
-    position: fixed;
-    top: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 300px;
-    background-color: rgba(20, 20, 30, 0.7);
-    border-radius: 8px;
-    padding: 1.5rem;
-    z-index: 5;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease;
-    will-change: transform;
-    margin-bottom: 20px;
-    background: linear-gradient(to bottom, #1a1a1a, #2d2d2d);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.controls .btn {
-    background-color: #1B5E20;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 6px;
-    padding: 0.8rem;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
-    will-change: transform, box-shadow;
+/* Контейнер управления */
+.controls-container {
     width: 100%;
-    font-weight: 500;
-    text-align: center;
-    border-radius: 6px;
-    outline: 2px solid rgba(76, 175, 80, 0.5);
-    outline-offset: 2px;
-    background: linear-gradient(to bottom, #1B5E20, #1A4A20);
-}
-
-.controls .btn:hover, .controls .btn:focus-visible {
-    background-color: #0D471A;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    color: #4CAF50;
-    outline: 2px solid rgba(76, 175, 80, 0.5);
-    outline-offset: 2px;
-}
-
-.controls .btn:active {
-    transform: translateY(0);
-    background-color: #0B360F;
-}
-
-.map-container {
-    position: sticky;
-    top: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: rgba(20, 20, 30, 0.5);
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
     border-radius: 8px;
-    padding: 1.5rem;
-    border: none;
-    overflow: hidden;
-    border-radius: 12px;
-    animation: fadeInContainer 0.5s ease-in forwards;
-    opacity: 0;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    will-change: opacity, transform;
+    margin-bottom: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    padding-bottom: 20px;
-    background: linear-gradient(to bottom, #121212, #0a0a1a);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
-    margin-top: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+    [data-theme="dark"] .controls-container {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
 }
 
-@keyframes fadeInContainer {
-    from { opacity: 0; transform: scale(0.98); }
-    to { opacity: 1; transform: scale(1); }
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 90%;
+    max-width: 600px;
+    
+    [data-theme="dark"] .controls {
+        gap: 0.7rem;
+    }
 }
 
-.fixed-footer {
+.btn {
+    padding: 0.75rem 1.5rem;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    
+    &:hover:not(.disabled) {
+        background-color: #45a049;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    &:focus-visible:not(.disabled) {
+        outline: 2px solid #4CAF50;
+    }
+    
+    &.disabled {
+        background-color: #333;
+        color: #666;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+    
+    [data-theme="dark"] .btn {
+        background-color: #4DD0E1;
+        color: #ffffff;
+    }
+    
+    [data-theme="dark"] .btn:hover:not(.disabled) {
+        background-color: #3B8BBA;
+    }
+}
+
+.slider {
+    width: 200px;
+    padding: 0.5rem;
+    background-color: #333;
+    border-radius: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: #4CAF50;
+        cursor: pointer;
+    }
+    
+    [data-theme="dark"] .slider {
+        background-color: #222;
+    }
+}
+
+/* Карта звуков */
+.map-container {
+    width: 100%;
+    min-width: 300px;
+    height: 400px;
+    background-color: #222;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    position: relative;
+    
+    [data-theme="dark"] .map-container {
+        background-color: #2a2a2a;
+    }
+}
+
+.map-text {
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+    margin: 0;
+    width: 100%;
+    
+    &:hover {
+        color: #4CAF50;
+        text-shadow: 0 0 5px rgba(76, 175, 73, 0.5);
+    }
+    
+    [data-theme="dark"] .map-text {
+        color: #e0e0e0;
+    }
+    
+    [data-theme="dark"] .map-text:hover {
+        color: #4DD0E1;
+        text-shadow: 0 0 5px rgba(77, 208, 225, 0.5);
+    }
+}
+
+/* Footer */
+.footer {
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: #FFFFFF;
+    right: 0;
     padding: 1rem;
-    text-align: center;
-    font-size: 0.7rem;
-    z-index: 1;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 0 0 8px 8px;
-    animation: scrollFadeIn 0.3s ease-out;
-    margin-top: 2rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #cccccc;
+    
+    [data-theme="dark"] .footer {
+        color: #a0a0a0;
+    }
+    
+    [data-theme="dark"] .footer span {
+        color: #e0e0e0;
+    }
 }
 
-@keyframes scrollFadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
+/* Адаптивность */
 @media (max-width: 768px) {
     .controls {
-        width: 95%;
-        max-width: 100%;
-        padding: 1.2rem;
-        margin-bottom: 15px;
-        top: 1rem;
+        flex-direction: column;
+        gap: 0.5rem;
     }
-    .controls .btn {
-        padding: 0.7rem;
+    
+    .btn {
+        width: 100%;
+        padding: 0.75rem;
         font-size: 0.9rem;
+    }
+    
+    .slider {
         width: 100%;
     }
-    .map-container {
-        position: relative;
-        top: auto;
-        margin-bottom: 1rem;
+    
+    .map-text {
+        font-size: 1.1rem;
     }
+    
+    .loading-progress {
+        width: 60px;
+    }
+    
+    .progress-bar {
+        width: 20%;
+    }
+}
+
+@media (max-width: 480px) {
+    .controls {
+        padding: 0.5rem;
+    }
+    
+    .btn {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    .map-text {
+        font-size: 1rem;
+    }
+    
+    .loading-message {
+        font-size: 1rem;
+    }
+}
+
+/* Анимации */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
 }
