@@ -21,14 +21,27 @@
                 loadingContainer.classList.remove('active');
                 loadingText.style.opacity = '0';
                 
-                // Показываем карту
-                soundMap.innerHTML = '<div class="sound-map-content">Your sound map will appear here.</div>';
+                // Показываем карту с placeholder'ом
+                soundMap.innerHTML = '';
+                const placeholder = document.createElement('div');
+                placeholder.className = 'map-container';
+                const dragText = document.createElement('p');
+                dragText.textContent = 'Drag to explore the sound map.';
+                placeholder.appendChild(dragText);
+                soundMap.appendChild(placeholder);
+                
+                // Плавный переход к карте
+                setTimeout(() => {
+                    placeholder.style.opacity = '1';
+                    placeholder.style.transform = 'translateY(0)';
+                }, 300);
                 
                 // Визуальное подтверждение успеха
                 const successText = document.createElement('p');
                 successText.textContent = 'Sound map loaded!';
                 successText.style.color = 'var(--btn-text)';
                 successText.style.fontWeight = 'bold';
+                successText.style.marginTop = '10px';
                 soundMap.prepend(successText);
             }, 1500);
         });
@@ -61,24 +74,17 @@
                 </div>
                 <div class="filter-group">
                     <label for="intensity">Intensity:</label>
-                    <input type="range" id="intensity" min="10" max="100" value="50" aria-label="Adjust sound intensity level" aria-describedby="intensity-description">
+                    <input type="range" id="intensity" class="slider" min="10" max="100" value="50" aria-label="Adjust sound intensity level" aria-describedby="intensity-description">
                     <p id="intensity-description" style="font-size: 12px; color: #888888; margin-top: 5px;">Higher values amplify sound intensity.</p>
                 </div>
             </div>
             
-            <div id="sound-map" class="sound-map">
-                <div id="loading-spinner" class="skeleton-loader" aria-live="polite" role="status">
-                    <div class="skeleton-line"></div>
-                    <div class="skeleton-line"></div>
-                    <div class="skeleton-line"></div>
-                </div>
-                <div id="loading-text" class="loading-text">Loading map...</div>
-            </div>
+            <div id="sound-map" class="sound-map"></div>
             
             <div class="interactive-example">
                 <p>Drag to explore the sound map.</p>
                 <div class="example-play-button">
-                    <button id="play-example" aria-label="Play example sound map" role="button" aria-expanded="false" aria-controls="sound-map">Play Example</button>
+                    <button id="play-example" class="btn" aria-label="Play example sound map" role="button" aria-expanded="false" aria-controls="sound-map">Play Example</button>
                 </div>
             </div>
         </main>
