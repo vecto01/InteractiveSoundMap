@@ -8,29 +8,29 @@
     <script>
         // Логика загрузки
         document.addEventListener('DOMContentLoaded', function() {
-            const loadingSpinner = document.getElementById('loading-spinner');
+            const loadingContainer = document.getElementById('loading-container');
+            const loadingIcon = document.getElementById('loading-icon');
             const loadingText = document.getElementById('loading-text');
             const soundMap = document.getElementById('sound-map');
             
             // Запуск анимации загрузки
-            loadingSpinner.style.display = 'flex';
-            loadingText.style.opacity = '1';
+            loadingContainer.classList.add('active');
             
-            // Имитация загрузки карты (замените на реальную загрузку API)
+            // Имитация загрузки карты
             setTimeout(function() {
-                loadingSpinner.style.display = 'none';
+                loadingContainer.classList.remove('active');
                 loadingText.style.opacity = '0';
                 
-                // Показываем карту или интерактивные элементы
+                // Показываем карту
                 soundMap.innerHTML = '<div class="sound-map-content">Your sound map will appear here.</div>';
                 
-                // Проверка на ошибки загрузки
-                if (soundMap.innerHTML.includes('Your sound map')) {
-                    alert('Sound map loaded successfully!');
-                } else {
-                    alert('Error loading sound map. Please try again.');
-                }
-            }, 2000);
+                // Визуальное подтверждение успеха
+                const successText = document.createElement('p');
+                successText.textContent = 'Sound map loaded!';
+                successText.style.color = 'var(--btn-text)';
+                successText.style.fontWeight = 'bold';
+                soundMap.prepend(successText);
+            }, 1500);
         });
     </script>
 </head>
@@ -45,10 +45,14 @@
         </header>
         
         <main class="main-content">
+            <div id="loading-container" class="loading-container">
+                <div id="loading-icon" class="loading-icon"></div>
+                <p id="loading-text">Loading map...</p>
+            </div>
             <div class="controls">
                 <div class="filter-group">
                     <label for="sound-type">Sound Type:</label>
-                    <select id="sound-type" aria-label="Select sound type">
+                    <select id="sound-type" aria-label="Select sound type for the map" aria-haspolicy="live update">
                         <option value="all">All</option>
                         <option value="music">Music</option>
                         <option value="nature">Nature</option>
@@ -57,12 +61,13 @@
                 </div>
                 <div class="filter-group">
                     <label for="intensity">Intensity:</label>
-                    <input type="range" id="intensity" min="10" max="100" value="50" aria-label="Adjust sound intensity">
+                    <input type="range" id="intensity" min="10" max="100" value="50" aria-label="Adjust sound intensity level" aria-describedby="intensity-description">
+                    <p id="intensity-description" style="font-size: 12px; color: #888888; margin-top: 5px;">Higher values amplify sound intensity.</p>
                 </div>
             </div>
             
             <div id="sound-map" class="sound-map">
-                <div id="loading-spinner" class="skeleton-loader" aria-live="polite">
+                <div id="loading-spinner" class="skeleton-loader" aria-live="polite" role="status">
                     <div class="skeleton-line"></div>
                     <div class="skeleton-line"></div>
                     <div class="skeleton-line"></div>
@@ -73,13 +78,13 @@
             <div class="interactive-example">
                 <p>Drag to explore the sound map.</p>
                 <div class="example-play-button">
-                    <button id="play-example" aria-label="Play example sound">Play Example</button>
+                    <button id="play-example" aria-label="Play example sound map" role="button" aria-expanded="false" aria-controls="sound-map">Play Example</button>
                 </div>
             </div>
         </main>
         
         <footer class="footer">
-            © 2024 Interactive Sound Map
+            <p>© 2024 Interactive Sound Map</p>
         </footer>
     </div>
 </body>
