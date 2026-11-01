@@ -6,29 +6,33 @@
     <title>Interactive Sound Map</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body data-theme="dark">
-    <div class="loading-spinner">
-        <div class="spinner"></div>
+<body>
+    <div id="loading-screen" class="loading-spinner">
+        <div class="loading-message">Loading sound map...</div>
     </div>
-    <div class="controls-container loaded">
-        <div class="controls">
-            <label for="sound-type">Sound Type:</label>
-            <select id="sound-type" class="select">
-                <option value="ambient">Ambient</option>
-                <option value="instrumental">Instrumental</option>
-            </select>
-            <label for="intensity">Intensity:</label>
-            <input type="range" id="intensity" class="slider" min="0" max="100" value="50">
-            <button class="btn" id="play-example">Play Example</button>
+    
+    <div class="controls">
+        <p style="color: #FFFFFF; text-decoration: underline; text-decoration-color: #4CAF50; text-decoration-thickness: 1px; font-weight: 500;">Drag to explore →</p>
+        <div class="control-group">
+            <button class="btn">Sound Type</button>
+        </div>
+        <input type="range" class="slider" min="0" max="100" value="50">
+        <div class="control-group">
+            <button class="btn">Play Example</button>
         </div>
     </div>
-    <div class="map-container loaded">
-        <h3>Drag to explore...</h3>
-        <!-- Карта будет загружаться после анимации загрузки -->
+    
+    <div class="map-container">
+        <div id="map-content">
+            <div class="no-sources" style="display: none;">No sound sources available yet</div>
+        </div>
+        <div id="ready-screen" class="ready-message" style="display: none;">Ready! Tap or drag to explore sounds.</div>
     </div>
-    <footer class="footer">
-        <p>© 2024 Interactive Sound Map</p>
-    </footer>
-    <script src="script.js"></script>
+    
+    <div class="footer">
+        <p style="color: #666; font-size: 0.8rem; margin-top: 1rem;">© 2023 Interactive Sound Map. All rights reserved.</p>
+    </div>
+    
+    <script src="scripts.js"></script>
 </body>
 </html>
