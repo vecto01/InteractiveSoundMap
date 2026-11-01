@@ -5,6 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Sound Map</title>
     <link rel="stylesheet" href="styles.css">
+    <script>
+        // Логика загрузки
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const loadingText = document.getElementById('loading-text');
+            const soundMap = document.getElementById('sound-map');
+            
+            // Запуск анимации загрузки
+            loadingSpinner.style.display = 'flex';
+            loadingText.style.opacity = '1';
+            
+            // Имитация загрузки карты (замените на реальную загрузку API)
+            setTimeout(function() {
+                loadingSpinner.style.display = 'none';
+                loadingText.style.opacity = '0';
+                
+                // Показываем карту или интерактивные элементы
+                soundMap.innerHTML = '<div class="sound-map-content">Your sound map will appear here.</div>';
+                
+                // Проверка на ошибки загрузки
+                if (soundMap.innerHTML.includes('Your sound map')) {
+                    alert('Sound map loaded successfully!');
+                } else {
+                    alert('Error loading sound map. Please try again.');
+                }
+            }, 2000);
+        });
+    </script>
 </head>
 <body>
     <div class="container">
@@ -34,31 +62,25 @@
             </div>
             
             <div id="sound-map" class="sound-map">
-                <div class="loading-container">
-                    <div id="loading-spinner" class="loading-spinner">
-                        <svg class="spinner" viewBox="0 0 50 50">
-                            <circle class="circle" cx="25" cy="25" r="20" fill="none" stroke-width="4"></circle>
-                        </svg>
-                    </div>
+                <div id="loading-spinner" class="skeleton-loader" aria-live="polite">
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line"></div>
                 </div>
+                <div id="loading-text" class="loading-text">Loading map...</div>
             </div>
             
             <div class="interactive-example">
-                <p>Drag to explore the sound map. Use filters below.</p>
+                <p>Drag to explore the sound map.</p>
                 <div class="example-play-button">
                     <button id="play-example" aria-label="Play example sound">Play Example</button>
                 </div>
             </div>
-            
-            <div class="instructions">
-                <p>Drag to explore the sound map. Adjust filters below.</p>
-            </div>
         </main>
         
         <footer class="footer">
-            <p>© 2024 Interactive Sound Map. Explore sounds interactively.</p>
+            © 2024 Interactive Sound Map
         </footer>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
