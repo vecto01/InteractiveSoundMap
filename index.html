@@ -1,124 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Sound Map</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        .loading-spinner {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            border-top-color: #4fc3f7;
-            animation: spin 1s ease-in-out infinite;
-            z-index: 1000;
-            display: none;
-        }
-        .loading-text {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Arial', sans-serif;
-            font-size: 1.2rem;
-            color: #333;
-            text-align: center;
-            z-index: 1001;
-            display: none;
-        }
-        @keyframes spin {
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        .sound-category {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-        .sound-description {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-        .card {
-            display: none;
-        }
-        .card.active {
-            display: block;
-        }
-        .footer {
-            text-align: center;
-            padding: 1rem;
-            margin-top: 2rem;
-            background-color: var(--bg-secondary);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-secondary);
-        }
-        .map-container {
-            min-height: 80vh;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Sound Map</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="map-container">
-        <!-- Карточки будут добавлены динамически -->
+  <div class="skeleton-loader" aria-live="polite"></div>
+  <div class="map-container">
+    <div class="filters-container">
+      <h1>Sound Explorer</h1>
+      <button class="filter-card" onclick="filterCards(this)">Filter by Noise</button>
     </div>
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Loading...</div>
-    <footer>
-        <p>© 2023 Sound Explorer. All rights reserved.</p>
-    </footer>
-    <script>
-        window.addEventListener('DOMContentLoaded', function() {
-            const loadingSpinner = document.querySelector('.loading-spinner');
-            const loadingText = document.querySelector('.loading-text');
-            const mapContainer = document.querySelector('.map-container');
-            
-            // Добавляем карточки с анимацией
-            const soundCategories = [
-                {
-                    category: 'Ambient Noise',
-                    description: 'Soft sounds from nature and urban environments.',
-                    frequencies: ['50 Hz', '75 Hz']
-                },
-                {
-                    category: 'City Traffic',
-                    description: 'Sounds of city life: cars, buses, and public transport.',
-                    frequencies: ['100 Hz', '150 Hz']
-                }
-            ];
-            
-            soundCategories.forEach((category, index) => {
-                const card = document.createElement('div');
-                card.className = 'card active';
-                
-                card.innerHTML = `"`;
-                card.innerHTML += `<div class="sound-category">${category.category}</div>`;
-                card.innerHTML += `<div class="sound-description">${category.description}</div>`;
-                
-                category.frequencies.forEach(frequency => {
-                    const frequencyItem = document.createElement('div');
-                    frequencyItem.className = 'frequency-item';
-                    frequencyItem.textContent = `Frequency: ${frequency}`;
-                    card.appendChild(frequencyItem);
-                });
-                
-                mapContainer.appendChild(card);
-            });
-            
-            // Убираем индикаторы загрузки после добавления контента
-            loadingSpinner.style.display = 'none';
-            loadingText.style.display = 'none';
-        });
-    </script>
+    <div class="card-container loaded">
+      <div class="card">
+        <h3>Ambient Noise</h3>
+        <p>City sounds at night.</p>
+      </div>
+      <div class="card">
+        <h3>City Traffic</h3>
+        <p>Vibrant urban life.</p>
+      </div>
+      <div class="card">
+        <h3>Forest Sounds</h3>
+        <p>Nature's serenity.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    © 2023 Sound Explorer
+  </footer>
+  <script src="main.js"></script>
+</body>
+</html>
