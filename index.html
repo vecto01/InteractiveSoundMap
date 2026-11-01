@@ -18,7 +18,12 @@
     <div class="controls-container">
         <div class="controls">
             <button class="btn disabled" aria-disabled="true">Sound Type</button>
-            <button class="btn disabled" aria-disabled="true">Play Example</button>
+            <div class="play-example-container">
+                <button class="btn disabled" aria-disabled="true" aria-label="Play sound example">
+                    <span class="play-icon">●</span>
+                    Play
+                </button>
+            </div>
             <input type="range" class="slider" min="0" max="100" value="50">
         </div>
     </div>
@@ -37,7 +42,7 @@
             const loadingMessage = document.querySelector('.loading-message');
             const mapContainer = document.querySelector('.map-container');
             const progressBar = document.querySelector('.progress-bar');
-            
+
             // Имитация загрузки с плавными анимациями
             setTimeout(() => {
                 loadingSpinner.classList.add('active');
@@ -45,19 +50,19 @@
                 progressBar.style.width = '25%';
                 progressBar.setAttribute('aria-valuenow', '25');
             }, 500);
-            
+
             setTimeout(() => {
                 loadingSpinner.classList.add('pulse');
                 setTimeout(() => {
                     loadingSpinner.classList.remove('pulse');
                     loadingMessage.textContent = 'Ready!';
-                    
+
                     // Плавное появление контейнера
                     mapContainer.style.opacity = '0';
                     mapContainer.style.transform = 'scale(0.95) translateY(10px)';
-                    
+
                     mapContainer.style.transition = 'opacity 0.5s ease, transform 0.5s ease, height 0.5s ease';
-                    
+
                     setTimeout(() => {
                         mapContainer.style.opacity = '1';
                         mapContainer.style.transform = 'scale(1) translateY(0)';
@@ -65,7 +70,7 @@
                     }, 500);
                 }, 500);
             }, 1200);
-            
+
             // Деактивация кнопок до завершения загрузки
             document.querySelectorAll('.btn').forEach(button => {
                 button.classList.add('disabled');
