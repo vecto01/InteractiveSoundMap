@@ -1,0 +1,150 @@
+/* Основные стили для светлой темы */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Темная тема */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+    .card {
+        background-color: #2a2a2a;
+        color: #ffffff !important;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.2s ease;
+        will-change: transform, opacity;
+        animation: fadeIn 0.5s ease forwards;
+    }
+    .card h3 {
+        color: #f8f8f8 !important;
+    }
+    .card p {
+        color: #c0c0c0 !important;
+    }
+    .footer {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        display: none;
+    }
+    body {
+        .footer {
+            display: block;
+        }
+    }
+}
+
+/* Анимация загрузки */
+.skeleton-loader {
+    width: 100%;
+    height: 12px;
+    background: linear-gradient(90deg, #e0e0e0 0%, #f0f0f0 50%, #e0e0e0 75%, #f0f0f0 100%);
+    margin: 1rem auto;
+    border-radius: 6px;
+    animation: loadAnimation 1.5s ease-in-out infinite;
+}
+
+@keyframes loadAnimation {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 100% 50%; }
+    50% { background-position: 0% 50%; }
+    75% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Анимация появления карточек */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Анимация кнопки Play при наведении */
+.btn {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    display: block;
+    margin: 1rem auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Карточки */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 24px;
+    width: 100%;
+    padding: 0 20px;
+    margin-top: 1rem;
+}
+
+/* Контролы */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 768px) {
+    .controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .card {
+        margin: 0.3rem;
+        width: 100%;
+        min-width: 200px;
+    }
+    .btn {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 0.9rem;
+        margin: 0.5rem;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+    }
+    .footer {
+        padding: 1rem;
+        margin-top: 1rem;
+        background-color: rgba(0, 0, 0, 0.3);
+        color: #fff;
+    }
+    .map-container {
+        padding: 0.5rem;
+        margin: 0 auto;
+    }
+}
+
+/* Футер */
+.footer {
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+    border-radius: 8px;
+    display: none;
+}

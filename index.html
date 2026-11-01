@@ -1,36 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Sound Map</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Sound Map</title>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-  <div class="skeleton-loader" aria-live="polite"></div>
-  <div class="map-container">
-    <div class="filters-container">
-      <h1>Sound Explorer</h1>
-      <button class="filter-card" onclick="filterCards(this)">Filter by Noise</button>
+    <!-- Переключатель тем -->
+    <div class="theme-toggle-container">
+        <label class="theme-toggle" for="theme-toggle">
+            <input type="checkbox" id="theme-toggle" checked>
+            <span class="slider"></span>
+        </label>
     </div>
-    <div class="card-container loaded">
-      <div class="card">
-        <h3>Ambient Noise</h3>
-        <p>City sounds at night.</p>
-      </div>
-      <div class="card">
-        <h3>City Traffic</h3>
-        <p>Vibrant urban life.</p>
-      </div>
-      <div class="card">
-        <h3>Forest Sounds</h3>
-        <p>Nature's serenity.</p>
-      </div>
+
+    <!-- Карта и элементы управления -->
+    <div class="map-container">
+        <div class="skeleton-loader"></div>
+        <div class="controls">
+            <button class="btn">Play</button>
+        </div>
+        <div class="cards-container">
+            <!-- Карточки будут добавлены динамически -->
+        </div>
     </div>
-  </div>
-  <footer class="footer">
-    © 2023 Sound Explorer
-  </footer>
-  <script src="main.js"></script>
+
+    <!-- Футер -->
+    <div class="footer">
+        <p>© 2023 Interactive Sound Map</p>
+    </div>
+
+    <!-- Карта и элементы управления -->
+    <div class="map-container">
+        <div class="skeleton-loader"></div>
+        <div class="controls">
+            <button class="btn">Play</button>
+        </div>
+        <div class="cards-container">
+            <!-- Карточки будут добавлены динамически -->
+        </div>
+    </div>
+
+    <script src="scripts/main.js"></script>
 </body>
 </html>
