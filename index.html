@@ -5,93 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Sound Map</title>
     <link rel="stylesheet" href="styles.css">
-    <script>
-        // Логика загрузки
-        document.addEventListener('DOMContentLoaded', function() {
-            const loadingContainer = document.getElementById('loading-container');
-            const loadingIcon = document.getElementById('loading-icon');
-            const loadingText = document.getElementById('loading-text');
-            const soundMap = document.getElementById('sound-map');
-            
-            // Запуск анимации загрузки
-            loadingContainer.classList.add('active');
-            
-            // Имитация загрузки карты
-            setTimeout(function() {
-                loadingContainer.classList.remove('active');
-                loadingText.style.opacity = '0';
-                
-                // Показываем карту с placeholder'ом
-                soundMap.innerHTML = '';
-                const placeholder = document.createElement('div');
-                placeholder.className = 'map-container';
-                const dragText = document.createElement('p');
-                dragText.textContent = 'Drag to explore the sound map.';
-                placeholder.appendChild(dragText);
-                soundMap.appendChild(placeholder);
-                
-                // Плавный переход к карте
-                setTimeout(() => {
-                    placeholder.style.opacity = '1';
-                    placeholder.style.transform = 'translateY(0)';
-                }, 300);
-                
-                // Визуальное подтверждение успеха
-                const successText = document.createElement('p');
-                successText.textContent = 'Sound map loaded!';
-                successText.style.color = 'var(--btn-text)';
-                successText.style.fontWeight = 'bold';
-                successText.style.marginTop = '10px';
-                soundMap.prepend(successText);
-            }, 1500);
-        });
-    </script>
 </head>
-<body>
-    <div class="container">
-        <header class="header">
-            <h1>Interactive Sound Map</h1>
-            <div class="theme-toggle">
-                <span class="current-theme">Dark</span>
-                <button id="theme-toggle" aria-label="Toggle light/dark mode">🌙</button>
-            </div>
-        </header>
-        
-        <main class="main-content">
-            <div id="loading-container" class="loading-container">
-                <div id="loading-icon" class="loading-icon"></div>
-                <p id="loading-text">Loading map...</p>
-            </div>
-            <div class="controls">
-                <div class="filter-group">
-                    <label for="sound-type">Sound Type:</label>
-                    <select id="sound-type" aria-label="Select sound type for the map" aria-haspolicy="live update">
-                        <option value="all">All</option>
-                        <option value="music">Music</option>
-                        <option value="nature">Nature</option>
-                        <option value="noise">Noise</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="intensity">Intensity:</label>
-                    <input type="range" id="intensity" class="slider" min="10" max="100" value="50" aria-label="Adjust sound intensity level" aria-describedby="intensity-description">
-                    <p id="intensity-description" style="font-size: 12px; color: #888888; margin-top: 5px;">Higher values amplify sound intensity.</p>
-                </div>
-            </div>
-            
-            <div id="sound-map" class="sound-map"></div>
-            
-            <div class="interactive-example">
-                <p>Drag to explore the sound map.</p>
-                <div class="example-play-button">
-                    <button id="play-example" class="btn" aria-label="Play example sound map" role="button" aria-expanded="false" aria-controls="sound-map">Play Example</button>
-                </div>
-            </div>
-        </main>
-        
-        <footer class="footer">
-            <p>© 2024 Interactive Sound Map</p>
-        </footer>
+<body data-theme="dark">
+    <div class="loading-spinner">
+        <div class="spinner"></div>
     </div>
+    <div class="controls-container loaded">
+        <div class="controls">
+            <label for="sound-type">Sound Type:</label>
+            <select id="sound-type" class="select">
+                <option value="ambient">Ambient</option>
+                <option value="instrumental">Instrumental</option>
+            </select>
+            <label for="intensity">Intensity:</label>
+            <input type="range" id="intensity" class="slider" min="0" max="100" value="50">
+            <button class="btn" id="play-example">Play Example</button>
+        </div>
+    </div>
+    <div class="map-container loaded">
+        <h3>Drag to explore...</h3>
+        <!-- Карта будет загружаться после анимации загрузки -->
+    </div>
+    <footer class="footer">
+        <p>© 2024 Interactive Sound Map</p>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
